@@ -78,6 +78,32 @@ IMAGE_HTML = """
 </html>
 """
 
+MARKDOWN_HTML = """
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
+    <style>
+        body {{
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }}
+        .markdown-body {{
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            margin: 0 auto;
+        }}
+    </style>
+</head>
+<body>
+    <div class="markdown-body">
+        {content}
+    </div>
+</body>
+</html>
+"""
+
 
 class PreviewWidget(widgets.Widget):
     """Widget that can display both PDFs and images using WebEngineView."""
@@ -128,7 +154,7 @@ class PreviewWidget(widgets.Widget):
             file_path = Path(file_path)
 
         if not file_path.exists():
-            logger.error(f"File does not exist: {file_path}")  # noqa: G004
+            logger.error("File does not exist: %s", file_path)
             self.set_default_view()
             return
 
@@ -140,17 +166,17 @@ class PreviewWidget(widgets.Widget):
         elif suffix in (".jpg", ".jpeg", ".png", ".bmp", ".gif"):
             self.load_image(file_path)
         else:
-            logger.warning(f"Unsupported file type: {suffix}")  # noqa: G004
+            logger.warning("Unsupported file type: %s", suffix)
             self.set_default_view()
 
     def load_pdf(self, file_path: Path):
         """Load a PDF file into the web view."""
-        logger.info(f"Loading PDF: {file_path}")  # noqa: G004
+        logger.info("Loading PDF: %s", file_path)
         self.web_view.load_url(file_path.as_uri())
 
     def load_image(self, file_path: Path):
         """Load an image file into the web view with HTML wrapper."""
-        logger.info(f"Loading image: {file_path}")  # noqa: G004
+        logger.info("Loading image: %s", file_path)
         mime_type, _ = mimetypes.guess_type(str(file_path))
         if not mime_type:
             mime_type = "image/jpeg"  # Default fallback
@@ -159,6 +185,30 @@ class PreviewWidget(widgets.Widget):
         content = IMAGE_HTML.format(path=path)
         url = core.Url.from_local_file(str(file_path.parent))
         self.web_view.set_html(content, base_url=url)
+
+    def load_markdown(self, content: str):
+        """Load markdown content for preview."""
+        logger.info("Loading markdown content")
+        try:
+            # Try to use markdown2 if available (better rendering)
+            import markdown2
+
+            html_content = markdown2.markdown(
+                content, extras=["tables", "fenced-code-blocks", "code-friendly"]
+            )
+        except ImportError:
+            # Fallback to simpler rendering
+            try:
+                import markdown
+
+                html_content = markdown.markdown(content)
+            except ImportError:
+                # Very simple fallback
+                html_content = f"<pre>{content}</pre>"
+
+        html = MARKDOWN_HTML.format(content=html_content)
+        self.web_view.set_html(html)
+        self.current_file = None  # Not associated with a file anymore
 
     def zoom_in(self):
         """Increase zoom level."""
