@@ -13,6 +13,71 @@ from chatly.core.translate import _
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_HTML = """
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f5f5f5;
+                color: #555;
+            }
+            .message {
+                text-align: center;
+                padding: 2em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="message">
+            <h2>Select a file to preview</h2>
+            <p>Supported files: PDF, JPG, PNG, JPEG, GIF, BMP</p>
+        </div>
+    </body>
+    </html>
+"""
+
+IMAGE_HTML = """
+<html>
+<head>
+    <style>
+        body {{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            height: 100vh;
+        }}
+        .image-container {{
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }}
+        img {{
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }}
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="{path}" alt="Image Preview">
+    </div>
+</body>
+</html>
+"""
+
 
 class PreviewWidget(widgets.Widget):
     """Widget that can display both PDFs and images using WebEngineView."""
@@ -36,7 +101,6 @@ class PreviewWidget(widgets.Widget):
             _("Reset Zoom"), icon="mdi.magnify", triggered=self.reset_zoom
         )
 
-        # Create WebEngineView for all content types
         self.web_view = webenginewidgets.WebEngineView()
         self.web_view.get_settings()["plugins_enabled"] = True
 
@@ -55,34 +119,7 @@ class PreviewWidget(widgets.Widget):
 
     def set_default_view(self):
         """Show default content when no file is selected."""
-        self.web_view.set_html("""
-            <html>
-            <head>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        height: 100vh;
-                        margin: 0;
-                        background-color: #f5f5f5;
-                        color: #555;
-                    }
-                    .message {
-                        text-align: center;
-                        padding: 2em;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="message">
-                    <h2>Select a file to preview</h2>
-                    <p>Supported files: PDF, JPG, PNG, JPEG, GIF, BMP</p>
-                </div>
-            </body>
-            </html>
-        """)
+        self.web_view.set_html(DEFAULT_HTML)
         self.current_file = None
 
     def load_file(self, file_path: Path | str):
@@ -114,52 +151,14 @@ class PreviewWidget(widgets.Widget):
     def load_image(self, file_path: Path):
         """Load an image file into the web view with HTML wrapper."""
         logger.info(f"Loading image: {file_path}")  # noqa: G004
-
-        # Get MIME type for the image
         mime_type, _ = mimetypes.guess_type(str(file_path))
         if not mime_type:
             mime_type = "image/jpeg"  # Default fallback
 
-        # Create HTML to display the image properly
-        html = f"""
-        <html>
-        <head>
-            <style>
-                body {{
-                    margin: 0;
-                    padding: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: #f5f5f5;
-                    height: 100vh;
-                }}
-                .image-container {{
-                    max-width: 100%;
-                    max-height: 100%;
-                    overflow: auto;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }}
-                img {{
-                    max-width: 100%;
-                    max-height: 100%;
-                    object-fit: contain;
-                }}
-            </style>
-        </head>
-        <body>
-            <div class="image-container">
-                <img src="{file_path.as_uri()}" alt="Image Preview">
-            </div>
-        </body>
-        </html>
-        """
-
-        self.web_view.set_html(
-            html, base_url=core.Url.from_local_file(str(file_path.parent))
-        )
+        path = file_path.as_uri()
+        content = IMAGE_HTML.format(path=path)
+        url = core.Url.from_local_file(str(file_path.parent))
+        self.web_view.set_html(content, base_url=url)
 
     def zoom_in(self):
         """Increase zoom level."""
