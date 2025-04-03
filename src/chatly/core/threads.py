@@ -108,7 +108,7 @@ class ThreadPool(core.ThreadPool):
             cls.__instance = cls()
         return cls.__instance
 
-    def start(
+    def start(  # type: ignore
         self,
         runnable: Worker,
         priority: int = 0,
