@@ -1,9 +1,9 @@
-!define APP_NAME "DataCook"
-!define MODULE_NAME "processanalyzer"
-!define COMP_NAME "University of Wuppertal"
-!define WEB_SITE "https://www.risk-management.uni-wuppertal.de/"
+!define APP_NAME "Chatly"
+!define MODULE_NAME "chatly"
+!define COMP_NAME "AIStack"
+!define WEB_SITE "https://www.a-i-stack.com/"
 !define VERSION "2.12.0"
-!define COPYRIGHT "Philipp Temminghoff  © 2019"
+!define COPYRIGHT "Philipp Temminghoff  © 2025"
 !define DESCRIPTION "Data analysis tool"
 !define INSTALLER_NAME "${MODULE_NAME}-installer.exe"
 !define MAIN_APP_EXE "${MODULE_NAME}.exe"
@@ -12,9 +12,9 @@
 !define REG_ROOT "HKCU"
 !define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_APP_EXE}"
 !define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
-!define APP_DIR "$INSTDIR\${MODULE_NAME}"
-!define APP_ICON "${MODULE_NAME}/resources/icon.ico"
-!define HEADER_IMAGE "${MODULE_NAME}/resources/installer_header.jpg"
+!define APP_DIR "$INSTDIR"
+!define APP_ICON "resources\icon.ico"
+!define HEADER_IMAGE "src\${MODULE_NAME}\resources\installer_header.jpg"
 
 ######################################################################
 
@@ -42,13 +42,11 @@ InstallDir "$PROGRAMFILES64\${APP_NAME}"
 
 !define MUI_ICON "${APP_ICON}"
 !define MUI_HEADERIMAGE_BITMAP "${HEADER_IMAGE}"
-; !define MUI_COMPONENTSPAGE_TEXT_TOP "Choose components"
 !define MUI_ABORTWARNING
 !define MUI_UNABORTWARNING
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "${LICENSE_TXT}"
-; !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 
 !ifdef REG_START_MENU
@@ -62,9 +60,9 @@ InstallDir "$PROGRAMFILES64\${APP_NAME}"
 
 !insertmacro MUI_PAGE_INSTFILES
 
-!define MUI_FINISHPAGE_RUN "${APP_DIR}\${MAIN_APP_EXE}"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\${MAIN_APP_EXE}"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
-!define MUI_FINISHPAGE_SHOWREADME "${APP_DIR}\${MODULE_NAME}\docs\index.html"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\docs\index.html"
 
 !insertmacro MUI_PAGE_FINISH
 
@@ -109,8 +107,6 @@ Function UninstallPrevious
 
 FunctionEnd
 
-
-
 ######################################################################
 
 Section -MainProgram
@@ -130,7 +126,7 @@ WriteUninstaller "$INSTDIR\uninstall.exe"
 !ifdef REG_START_MENU
 !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 CreateDirectory "$SMPROGRAMS\$SM_Folder"
-CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME}.lnk" "${APP_DIR}\${MAIN_APP_EXE}"
+CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"  ; Updated path
 WriteIniStr "$INSTDIR\${APP_NAME} website.url" "InternetShortcut" "URL" "${WEB_SITE}"
 CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME} Website.lnk" "$INSTDIR\${APP_NAME} website.url"
 !insertmacro MUI_STARTMENU_WRITE_END
@@ -138,20 +134,19 @@ CreateShortCut "$SMPROGRAMS\$SM_Folder\${APP_NAME} Website.lnk" "$INSTDIR\${APP_
 
 !ifndef REG_START_MENU
 CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "${APP_DIR}\${MAIN_APP_EXE}"
+CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"  ; Updated path
 WriteIniStr "$INSTDIR\${APP_NAME} website.url" "InternetShortcut" "URL" "${WEB_SITE}"
 CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME} Website.lnk" "$INSTDIR\${APP_NAME} website.url"
 !endif
 
-CreateShortCut "$INSTDIR\${APP_NAME}.lnk" "${APP_DIR}\${MAIN_APP_EXE}"
+CreateShortCut "$INSTDIR\${APP_NAME}.lnk" "$INSTDIR\${MAIN_APP_EXE}"  ; Updated path
 
 WriteRegStr ${REG_ROOT} "${REG_APP_PATH}" "" "$INSTDIR"
 WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "DisplayName" "${APP_NAME}"
 WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "UninstallString" "$INSTDIR\uninstall.exe"
-WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "DisplayIcon" "${APP_DIR}\${MAIN_APP_EXE}"
+WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "DisplayIcon" "$INSTDIR\${MAIN_APP_EXE}"  ; Updated path
 WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "DisplayVersion" "${VERSION}.0"
 WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "Publisher" "${COMP_NAME}"
-
 WriteRegStr ${REG_ROOT} "${UNINSTALL_PATH}"  "URLInfoAbout" "${WEB_SITE}"
 
 SectionEnd
@@ -161,13 +156,10 @@ SectionEnd
 Section Uninstall
 ${INSTALL_TYPE}
 
-RmDir /r "${APP_DIR}"
 Delete "$INSTDIR\uninstall.exe"
 Delete "$INSTDIR\${APP_NAME} website.url"
 Delete "$INSTDIR\${APP_NAME}.lnk"
-
-RmDir "$INSTDIR"
-
+RmDir /r "$INSTDIR"  ; This will remove all files and directories
 
 !ifdef REG_START_MENU
 !insertmacro MUI_STARTMENU_GETFOLDER "Application" $SM_Folder
