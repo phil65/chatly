@@ -22,20 +22,11 @@ class DocumentsPage(widgets.MainWindow):
         self.set_title(_("Documents"))
         self.set_icon("mdi.file-document-outline")
         self.document_manager = DocumentManager.instance()
-
-        # Create and set the document list as central widget
         self.doc_list_widget = self.create_document_list()
         self.set_widget(self.doc_list_widget)
-
-        # Create and add preview widget as right dock
         self.preview_widget = PreviewWidget()
-        preview_dock = self.add_dockwidget(
-            self.preview_widget,
-            position="right",
-        )
+        preview_dock = self.add_dockwidget(self.preview_widget, position="right")
         preview_dock.set_window_title(_("Document Preview"))
-
-        # Create and add markdown raw view as bottom dock
         self.raw_markdown = widgets.PlainTextEdit()
         self.raw_markdown.set_read_only(True)
         self.raw_markdown.set_line_wrap_mode("none")
@@ -45,8 +36,6 @@ class DocumentsPage(widgets.MainWindow):
             position="bottom",
         )
         markdown_dock.set_title(_("Raw Markdown"))
-
-        # Set up signals
         self.document_manager.document_added.connect(self.update_document_list)
         self.document_manager.document_removed.connect(self.update_document_list)
 
