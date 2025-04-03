@@ -26,12 +26,20 @@ class MainWindow(custom_widgets.SidebarWidget):
         self.ocr_view = pages.OcrPage()
         self.chat_page = pages.ChatPage()
         self.help_page = pages.HelpPage()
+        self.documents_page = pages.DocumentsPage()
         # self.explorer_page = pages.FileExplorerPage()
         self.log_page = pages.LogPage()
 
         self.add_tab(self.start_view, _("Start"), icon="mdi.google-nearby", shortcut="F1")
-        self.add_tab(self.ocr_view, _("Datasets"), icon="mdi.database", shortcut="F2")
-        self.add_tab(self.chat_page, _("Chat"), icon="mdi.chat", shortcut="F3")
+        self.add_tab(
+            self.documents_page,
+            _("Documents"),
+            icon="mdi.file-document-outline",
+            shortcut="F2",
+        )
+
+        self.add_tab(self.ocr_view, _("Datasets"), icon="mdi.database", shortcut="F3")
+        self.add_tab(self.chat_page, _("Chat"), icon="mdi.chat", shortcut="F4")
         self.settings_menu.add_action(
             text=_("Settings"), icon="mdi.wrench-outline", callback=self.show_settings
         )

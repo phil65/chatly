@@ -1,4 +1,4 @@
-"""Documents page."""
+"""Documents page with dockable preview and raw text widgets."""
 
 from __future__ import annotations
 
@@ -16,25 +16,37 @@ logger = logging.getLogger(__name__)
 
 class DocumentsPage(widgets.MainWindow):
     def __init__(self, parent=None):
-        """Container widget including a toolbar."""
+        """Container widget including dockable components."""
         super().__init__(parent=parent)
         self.set_object_name("documents_view")
         self.set_title(_("Documents"))
         self.set_icon("mdi.file-document-outline")
         self.document_manager = DocumentManager.instance()
 
-        # Main widget
-        main_widget = widgets.Widget()
-        main_widget.set_layout("horizontal", margin=0)
-        self.set_widget(main_widget)
-
-        self.splitter = widgets.Splitter(orientation="horizontal")
-        main_widget.box.add(self.splitter)
+        # Create and set the document list as central widget
         self.doc_list_widget = self.create_document_list()
-        self.splitter.add(self.doc_list_widget)
+        self.set_widget(self.doc_list_widget)
+
+        # Create and add preview widget as right dock
         self.preview_widget = PreviewWidget()
-        self.splitter.add(self.preview_widget)
-        self.splitter.set_sizes([300, 700])
+        preview_dock = self.add_dockwidget(
+            self.preview_widget,
+            position="right",
+        )
+        preview_dock.set_window_title(_("Document Preview"))
+
+        # Create and add markdown raw view as bottom dock
+        self.raw_markdown = widgets.PlainTextEdit()
+        self.raw_markdown.set_read_only(True)
+        self.raw_markdown.set_line_wrap_mode("no_wrap")
+        self.raw_markdown.set_font_family("monospace")
+        markdown_dock = self.add_dockwidget(
+            self.raw_markdown,
+            position="bottom",
+        )
+        markdown_dock.set_title(_("Raw Markdown"))
+
+        # Set up signals
         self.document_manager.document_added.connect(self.update_document_list)
         self.document_manager.document_removed.connect(self.update_document_list)
 
@@ -43,7 +55,7 @@ class DocumentsPage(widgets.MainWindow):
         widget = widgets.Widget()
         widget.set_layout("vertical")
 
-        header_layout = widget.box.add_layout("horizontal")
+        header_layout = widgets.HBoxLayout(parent=widget.box)
         label = widgets.Label(_("Converted Documents"))
         label.set_bold()
         header_layout.add(label)
@@ -115,6 +127,7 @@ class DocumentsPage(widgets.MainWindow):
         if result == widgets.MessageBox.StandardButton.Yes:
             self.document_manager.clear()
             self.preview_widget.set_default_view()
+            self.raw_markdown.clear()
             # Clear info panel
             self.info_title.set_text("")
             self.info_converter.set_text("")
@@ -124,6 +137,7 @@ class DocumentsPage(widgets.MainWindow):
         """Handle document selection in the list."""
         if not current:
             self.preview_widget.set_default_view()
+            self.raw_markdown.clear()
             # Clear info panel
             self.info_title.set_text("")
             self.info_converter.set_text("")
@@ -134,8 +148,9 @@ class DocumentsPage(widgets.MainWindow):
         document = self.document_manager.get_document(doc_id)
 
         if document:
-            # Update preview
+            # Update preview and raw markdown
             self.preview_widget.load_markdown(document.content)
+            self.raw_markdown.set_text(document.content)
 
             # Update info panel
             self.info_title.set_text(document.title or "Untitled")

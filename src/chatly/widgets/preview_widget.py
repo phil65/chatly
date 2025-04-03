@@ -184,7 +184,7 @@ class PreviewWidget(widgets.Widget):
         path = file_path.as_uri()
         content = IMAGE_HTML.format(path=path)
         url = core.Url.from_local_file(str(file_path.parent))
-        self.web_view.set_html(content, base_url=url)
+        self.web_view.set_html(content, baseUrl=url)
 
     def load_markdown(self, content: str):
         """Load markdown content for preview."""
