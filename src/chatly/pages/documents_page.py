@@ -31,10 +31,7 @@ class DocumentsPage(widgets.MainWindow):
         self.raw_markdown.set_read_only(True)
         self.raw_markdown.set_line_wrap_mode("none")
         # self.raw_markdown.set_font_family("monospace")
-        markdown_dock = self.add_dockwidget(
-            self.raw_markdown,
-            position="bottom",
-        )
+        markdown_dock = self.add_dockwidget(self.raw_markdown, "bottom")
         markdown_dock.set_title(_("Raw Markdown"))
         self.document_manager.document_added.connect(self.update_document_list)
         self.document_manager.document_removed.connect(self.update_document_list)
@@ -48,26 +45,21 @@ class DocumentsPage(widgets.MainWindow):
         label = widgets.Label(_("Converted Documents"))
         label.set_bold()
         header_layout.add(label)
-
-        # Add refresh and clear buttons
         btn_refresh = widgets.ToolButton(icon="mdi.refresh")
         btn_refresh.set_tool_tip(_("Refresh document list"))
         btn_refresh.clicked.connect(self.update_document_list)
         header_layout.add_stretch()
         header_layout.add(btn_refresh)
-
         btn_clear = widgets.ToolButton(icon="mdi.delete")
         btn_clear.set_tool_tip(_("Clear all documents"))
         btn_clear.clicked.connect(self.clear_documents)
         header_layout.add(btn_clear)
 
-        # Document list
         self.list_widget = widgets.ListWidget()
         self.list_widget.set_selection_mode("single")
         self.list_widget.current_item_changed.connect(self.on_document_selected)
         widget.box.add(self.list_widget)
 
-        # Document info panel
         self.info_panel = widgets.GroupBox(_("Document Info"))
         self.info_panel.set_layout("form")
         self.info_title = widgets.Label()
@@ -78,9 +70,7 @@ class DocumentsPage(widgets.MainWindow):
         self.info_panel.box.add_row(_("Source:"), self.info_source)
         widget.box.add(self.info_panel)
 
-        # Initially populate the list
         self.update_document_list()
-
         return widget
 
     def update_document_list(self, *args, **kwargs):
@@ -91,7 +81,6 @@ class DocumentsPage(widgets.MainWindow):
         for doc_id, doc in documents:
             title = doc.title or "Untitled Document"
             converter = self.document_manager.get_converter(doc_id) or "Unknown"
-
             item = widgets.ListWidgetItem(f"{title} ({converter})")
             item.set_data(core.Qt.ItemDataRole.UserRole, doc_id)
             item.set_data(
