@@ -38,8 +38,8 @@ class DocumentsPage(widgets.MainWindow):
         # Create and add markdown raw view as bottom dock
         self.raw_markdown = widgets.PlainTextEdit()
         self.raw_markdown.set_read_only(True)
-        self.raw_markdown.set_line_wrap_mode("no_wrap")
-        self.raw_markdown.set_font_family("monospace")
+        self.raw_markdown.set_line_wrap_mode("none")
+        # self.raw_markdown.set_font_family("monospace")
         markdown_dock = self.add_dockwidget(
             self.raw_markdown,
             position="bottom",
