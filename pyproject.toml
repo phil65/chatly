@@ -43,6 +43,12 @@ dependencies = [
     "docler[all]>=0.2.0",
 ]
 
+[project.scripts]
+chatly = "chatly.__main__:main"
+
+[project.gui-scripts]
+chatly-gui = "chatly.__main__:main"
+
 [tool.uv]
 default-groups = ["dev", "lint", "docs"]
 
