@@ -36,8 +36,7 @@ keywords = []
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
 dependencies = [
-    "prettyqt",
-    "pyside6",
+    "prettyqt[pyside6]",
     "pydantic",
     # Only add below (Copier)
     "docler[all]>=0.2.0",
