@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 
-from prettyqt import core, widgets
+from prettyqt import constants, core, widgets
 
 from chatly.core.document_manager import DocumentManager
 from chatly.core.translate import _
@@ -82,9 +82,9 @@ class DocumentsPage(widgets.MainWindow):
             title = doc.title or "Untitled Document"
             converter = self.document_manager.get_converter(doc_id) or "Unknown"
             item = widgets.ListWidgetItem(f"{title} ({converter})")
-            item.set_data(core.Qt.ItemDataRole.UserRole, doc_id)
+            item.set_data(constants.USER_ROLE, doc_id)
             item.set_data(
-                core.Qt.ItemDataRole.ToolTipRole,
+                constants.TOOLTIP_ROLE,
                 f"Source: {doc.source_path or 'Unknown'}",
             )
             self.list_widget += item

@@ -25,7 +25,7 @@ class LogPage(widgets.Widget):
         tb.add_action(
             _("Clear"),
             icon="mdi.notification-clear-all",
-            triggered=self.logwidget.clear,
+            callback=self.logwidget.clear,
         )
         return tb
 
