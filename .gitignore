@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+dist/
+build/
 # Distribution / packaging
 *.sublime-workspace
 # Unit test / coverage reports
