@@ -12,12 +12,12 @@ import pkg_resources
 
 sys.setrecursionlimit(5000)
 print("Arguments:", sys.argv)
-MODULE_NAME = "processanalyzer"
+MODULE_NAME = "chatly"
 VERSION = "2.12.0"
 QT_FRAMEWORK = os.environ.get("PYINSTALLER_QT_API", "PyQt6")
 CONSOLE = os.environ.get("PYINSTALLER_CONSOLE", True)
 SPEC_FILE_PATH = pathlib.Path(SPECPATH)
-MODULE_PATH = SPEC_FILE_PATH / MODULE_NAME
+MODULE_PATH = SPEC_FILE_PATH / "src" / MODULE_NAME
 
 BLOCK_CIPHER = None
 
@@ -31,14 +31,14 @@ for mod in invalid_modules:
 
 
 DATAS = [
-    (str(MODULE_PATH / "plugins"), f"{MODULE_NAME}\\plugins"),
-    (str(MODULE_PATH / "locales"), f"{MODULE_NAME}\\locales"),
-    (str(MODULE_PATH / "resources"), f"{MODULE_NAME}\\resources"),
-    # (str(MODULE_PATH / "Qt5Core.dll"), "PyQt5\\Qt\\bin\\"),
-    (str(MODULE_PATH / "logging.yaml"), f"{MODULE_NAME}\\"),
-    (str(MODULE_PATH / "config_default.yaml"), f"{MODULE_NAME}\\"),
-    (str(SPEC_FILE_PATH / "docs/site"), f"{MODULE_NAME}\\docs"),
-    (str(pathlib.Path(HOMEPATH) / "fastparquet.libs"), "fastparquet.libs"),
+    # (str(MODULE_PATH / "plugins"), f"{MODULE_NAME}\\plugins"),
+    # (str(MODULE_PATH / "locales"), f"{MODULE_NAME}\\locales"),
+    # (str(MODULE_PATH / "resources"), f"{MODULE_NAME}\\resources"),
+    # # (str(MODULE_PATH / "Qt5Core.dll"), "PyQt5\\Qt\\bin\\"),
+    # (str(MODULE_PATH / "logging.yaml"), f"{MODULE_NAME}\\"),
+    # (str(MODULE_PATH / "config_default.yaml"), f"{MODULE_NAME}\\"),
+    # (str(SPEC_FILE_PATH / "docs/site"), f"{MODULE_NAME}\\docs"),
+    # (str(pathlib.Path(HOMEPATH) / "fastparquet.libs"), "fastparquet.libs"),
 ]
 
 IMPORTS = [QT_FRAMEWORK]
@@ -109,7 +109,7 @@ else:
     win_version = None
 
 a = Analysis(
-    [str(SPEC_FILE_PATH / MODULE_NAME / "__main__.py")],
+    [str(SPEC_FILE_PATH / "src" / MODULE_NAME / "__main__.py")],
     pathex=[str(SPEC_FILE_PATH)],
     binaries=[],
     datas=DATAS,
@@ -140,7 +140,7 @@ exe = EXE(
     strip=False,
     upx=True,
     console=CONSOLE,
-    icon=f"{MODULE_NAME}\\resources\\icon.ico",
+    icon="resources\\icon.ico",
     version=win_version,
 )
 
