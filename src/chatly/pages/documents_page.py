@@ -20,8 +20,8 @@ class DocumentsPage(widgets.MainWindow):
         super().__init__(
             parent=parent,
             object_name="documents_view",
-            title="Documents",
-            icon="mdi.file-document-outline",
+            window_title="Documents",
+            window_icon="mdi.file-document-outline",
         )
         self.document_manager = DocumentManager.instance()
         self.doc_list_widget = self.create_document_list()
@@ -59,7 +59,7 @@ class DocumentsPage(widgets.MainWindow):
 
         self.list_widget = widgets.ListWidget()
         self.list_widget.set_selection_mode("single")
-        self.list_widget.current_item_changed.connect(self.on_document_selected)
+        self.list_widget.currentItemChanged.connect(self.on_document_selected)
         widget.box.add(self.list_widget)
 
         self.info_panel = widgets.GroupBox(_("Document Info"))

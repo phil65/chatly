@@ -14,8 +14,8 @@ class ChatPage(widgets.MainWindow):
         super().__init__(
             parent=parent,
             object_name="chat_view",
-            title="Chat",
-            icon="mdi.chat",
+            window_title="Chat",
+            window_icon="mdi.chat",
         )
         widget = widgets.Widget()
         widget.set_layout("vertical", margin=0)

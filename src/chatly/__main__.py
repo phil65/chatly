@@ -22,10 +22,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     """Run the application."""
     args = parse_args()
-
     log_level = logging.DEBUG if args.verbose else logging.INFO
     logging.basicConfig(level=log_level)
-
     app = MainApp()
     window = MainWindow()
     window.show()

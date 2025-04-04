@@ -20,9 +20,13 @@ logger = logging.getLogger(__name__)
 class StartPage(widgets.MainWindow):
     def __init__(self, parent=None):
         """Container widget including a toolbar."""
-        super().__init__(parent=parent, object_name="start_view")
-        self.set_title(_("Start"))
-        self.set_icon("mdi.home")
+        super().__init__(
+            parent=parent,
+            object_name="start_view",
+            window_title="Start",
+            window_icon="mdi.home",
+        )
+
         self.document_manager = DocumentManager.instance()
         self.current_file = None
         widget = widgets.Widget()

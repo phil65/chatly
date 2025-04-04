@@ -2,15 +2,12 @@
 
 from prettyqt import widgets
 
-from chatly.core.translate import _
 from chatly.gui import trees
 
 
 class FileExplorerPage(widgets.Widget):
     def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        self.set_title(_("Files"))
-        self.set_icon("mdi.file")
+        super().__init__(parent=parent, window_title="Files", window_icon="mdi.file")
         self.set_layout("horizontal", margin=0)
         # filters = appmanager.instance.supported_filetypes()
         self.tree = trees.FileTree()  # filters=filters

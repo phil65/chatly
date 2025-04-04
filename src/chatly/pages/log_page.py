@@ -10,9 +10,12 @@ from chatly.core.translate import _
 
 class LogPage(widgets.Widget):
     def __init__(self, *args, **kwargs):
-        super().__init__(parent=kwargs.get("parent"))
-        self.set_title(_("Activity log"))
-        self.set_icon("mdi.text-subject")
+        super().__init__(
+            parent=kwargs.get("parent"),
+            window_title="Activity log",
+            window_icon="mdi.text-subject",
+        )
+
         layout = self.set_layout("horizontal", margin=0)
         self.logwidget = custom_widgets.LogTextEdit()
         toolbar = self.get_toolbar()
