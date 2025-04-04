@@ -73,7 +73,7 @@ class MainWindow(custom_widgets.SidebarWidget):
     def show(self, *args, **kwargs):
         self.load_window_state(recursive=True)
         super().show(*args, **kwargs)
-        self.act_fullscreen.set_checked(self.isFullScreen())
+        self.act_fullscreen.setChecked(self.isFullScreen())
 
     def closeEvent(self, event):  # noqa: N802
         """override, gets executed when app gets closed."""
