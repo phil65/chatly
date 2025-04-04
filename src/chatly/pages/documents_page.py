@@ -106,7 +106,6 @@ class DocumentsPage(widgets.MainWindow):
             self.document_manager.clear()
             self.preview_widget.set_default_view()
             self.raw_markdown.clear()
-            # Clear info panel
             self.info_title.set_text("")
             self.info_converter.set_text("")
             self.info_source.set_text("")
@@ -123,14 +122,9 @@ class DocumentsPage(widgets.MainWindow):
             return
 
         doc_id = current.data(core.Qt.ItemDataRole.UserRole)
-        document = self.document_manager.get_document(doc_id)
-
-        if document:
-            # Update preview and raw markdown
+        if document := self.document_manager.get_document(doc_id):
             self.preview_widget.load_markdown(document.content)
             self.raw_markdown.set_text(document.content)
-
-            # Update info panel
             self.info_title.set_text(document.title or "Untitled")
             converter = self.document_manager.get_converter(doc_id) or "Unknown"
             self.info_converter.set_text(converter)

@@ -19,4 +19,4 @@ class LangProvider:
 
 
 def _(text: str) -> str:
-    return LangProvider.lang(text)
+    return LangProvider.lang(text)  # pyright: ignore
