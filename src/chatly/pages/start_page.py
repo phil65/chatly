@@ -20,8 +20,7 @@ logger = logging.getLogger(__name__)
 class StartPage(widgets.MainWindow):
     def __init__(self, parent=None):
         """Container widget including a toolbar."""
-        super().__init__(parent=parent)
-        self.set_object_name("start_view")
+        super().__init__(parent=parent, object_name="start_view")
         self.set_title(_("Start"))
         self.set_icon("mdi.home")
         self.document_manager = DocumentManager.instance()
@@ -51,13 +50,10 @@ class StartPage(widgets.MainWindow):
         self.fs_model.set_root_path(home_dir)
         exts = ["*.pdf", "*.jpg", "*.jpeg", "*.png", "*.bmp", "*.gif"]
         self.fs_model.set_name_filters(exts)
-        self.fs_model.set_name_filter_disables(False)
         self.tree_view = widgets.TreeView()
         self.tree_view.set_model(self.fs_model)
-        for i in range(1, self.fs_model.columnCount()):
-            self.tree_view.hide_column(i)
         self.tree_view.h_header.resize_sections("stretch")
-        self.tree_view.double_clicked.connect(self.on_file_selected)
+        self.tree_view.doubleClicked.connect(self.on_file_selected)
         self.tree_view.clicked.connect(self.on_file_selected)
         widget.box.add(self.tree_view)
         return widget
@@ -69,11 +65,9 @@ class StartPage(widgets.MainWindow):
         label = widgets.Label(_("Document Converters"))
         label.set_bold()
         widget.box.add(label)
-        info_label = widgets.Label(_("Select a file to convert"))
-        info_label.set_word_wrap(True)
+        info_label = widgets.Label(_("Select a file to convert"), word_wrap=True)
         widget.box.add(info_label)
-        scroll_area = widgets.ScrollArea()
-        scroll_area.set_widget_resizable(True)
+        scroll_area = widgets.ScrollArea(widget_resizable=True)
         button_widget = widgets.Widget()
         button_layout = button_widget.set_layout("vertical")
         self.converter_buttons = {}
@@ -85,8 +79,7 @@ class StartPage(widgets.MainWindow):
             self.converter_buttons[name] = btn
         scroll_area.set_widget(button_widget)
         widget.box.add(scroll_area)
-        self.status_label = widgets.Label()
-        self.status_label.set_word_wrap(True)
+        self.status_label = widgets.Label(word_wrap=True)
         widget.box.add(self.status_label)
 
         return widget

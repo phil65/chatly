@@ -17,16 +17,18 @@ logger = logging.getLogger(__name__)
 class DocumentsPage(widgets.MainWindow):
     def __init__(self, parent=None):
         """Container widget including dockable components."""
-        super().__init__(parent=parent)
-        self.set_object_name("documents_view")
-        self.set_title(_("Documents"))
-        self.set_icon("mdi.file-document-outline")
+        super().__init__(
+            parent=parent,
+            object_name="documents_view",
+            title="Documents",
+            icon="mdi.file-document-outline",
+        )
         self.document_manager = DocumentManager.instance()
         self.doc_list_widget = self.create_document_list()
         self.set_widget(self.doc_list_widget)
         self.preview_widget = PreviewWidget()
         preview_dock = self.add_dockwidget(self.preview_widget, position="right")
-        preview_dock.set_window_title(_("Document Preview"))
+        preview_dock.set_title(_("Document Preview"))
         self.raw_markdown = widgets.PlainTextEdit()
         self.raw_markdown.set_read_only(True)
         self.raw_markdown.set_line_wrap_mode("none")
@@ -46,12 +48,12 @@ class DocumentsPage(widgets.MainWindow):
         label.set_bold()
         header_layout.add(label)
         btn_refresh = widgets.ToolButton(icon="mdi.refresh")
-        btn_refresh.set_tool_tip(_("Refresh document list"))
+        btn_refresh.set_tooltip(_("Refresh document list"))
         btn_refresh.clicked.connect(self.update_document_list)
         header_layout.add_stretch()
         header_layout.add(btn_refresh)
         btn_clear = widgets.ToolButton(icon="mdi.delete")
-        btn_clear.set_tool_tip(_("Clear all documents"))
+        btn_clear.set_tooltip(_("Clear all documents"))
         btn_clear.clicked.connect(self.clear_documents)
         header_layout.add(btn_clear)
 

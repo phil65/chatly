@@ -111,36 +111,23 @@ class PreviewWidget(widgets.Widget):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.set_layout("vertical", margin=0)
-
-        # Create toolbar with controls
         self.toolbar = widgets.ToolBar()
         self.box.add(self.toolbar)
-
-        # Add zoom controls
         self.toolbar.add_action(
-            _("Zoom In"), icon="mdi.magnify-plus-outline", triggered=self.zoom_in
+            _("Zoom In"), icon="mdi.magnify-plus-outline", callback=self.zoom_in
         )
         self.toolbar.add_action(
-            _("Zoom Out"), icon="mdi.magnify-minus-outline", triggered=self.zoom_out
+            _("Zoom Out"), icon="mdi.magnify-minus-outline", callback=self.zoom_out
         )
         self.toolbar.add_action(
-            _("Reset Zoom"), icon="mdi.magnify", triggered=self.reset_zoom
+            _("Reset Zoom"), icon="mdi.magnify", callback=self.reset_zoom
         )
-
         self.web_view = webenginewidgets.WebEngineView()
         self.web_view.get_settings()["plugins_enabled"] = True
-
-        # Set default zoom
         self.zoom_factor = 1.0
         self.web_view.set_zoom(self.zoom_factor)
-
-        # Add to layout
         self.box.add(self.web_view)
-
-        # Show default content
         self.set_default_view()
-
-        # Track current file
         self.current_file = None
 
     def set_default_view(self):
@@ -184,30 +171,17 @@ class PreviewWidget(widgets.Widget):
         path = file_path.as_uri()
         content = IMAGE_HTML.format(path=path)
         url = core.Url.from_local_file(str(file_path.parent))
-        self.web_view.set_html(content, baseUrl=url)
+        self.web_view.setHtml(content, baseUrl=url)
 
     def load_markdown(self, content: str):
         """Load markdown content for preview."""
         logger.info("Loading markdown content")
-        try:
-            # Try to use markdown2 if available (better rendering)
-            import markdown2
+        from mkdown import ComrakParser
 
-            html_content = markdown2.markdown(
-                content, extras=["tables", "fenced-code-blocks", "code-friendly"]
-            )
-        except ImportError:
-            # Fallback to simpler rendering
-            try:
-                import markdown
-
-                html_content = markdown.markdown(content)
-            except ImportError:
-                # Very simple fallback
-                html_content = f"<pre>{content}</pre>"
-
+        parser = ComrakParser()
+        html_content = parser.convert(content)
         html = MARKDOWN_HTML.format(content=html_content)
-        self.web_view.set_html(html)
+        self.web_view.setHtml(html)
         self.current_file = None  # Not associated with a file anymore
 
     def zoom_in(self):
