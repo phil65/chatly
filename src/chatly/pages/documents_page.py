@@ -67,9 +67,11 @@ class DocumentsPage(widgets.MainWindow):
         self.info_title = widgets.Label()
         self.info_converter = widgets.Label()
         self.info_source = widgets.Label()
-        self.info_panel.box.addRow(_("Title:"), self.info_title)
-        self.info_panel.box.addRow(_("Converter:"), self.info_converter)
-        self.info_panel.box.addRow(_("Source:"), self.info_source)
+        self.info_panel.box.add(
+            (_("Title:"), self.info_title),
+            (_("Converter:"), self.info_converter),
+            (_("Source:"), self.info_source),
+        )
         widget.box.add(self.info_panel)
 
         self.update_document_list()
