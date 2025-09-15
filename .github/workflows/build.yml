@@ -94,6 +94,6 @@ jobs:
         run: uv run pyinstaller main.spec
 
       - name: makensis
-        uses: joncloud/makensis-action@v4.1
+        uses: joncloud/makensis-action@v5.0
         with:
           arguments: "/V4"
