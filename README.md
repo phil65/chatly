@@ -2,8 +2,6 @@
 
 [![PyPI License](https://img.shields.io/pypi/l/chatly.svg)](https://pypi.org/project/chatly/)
 [![Package status](https://img.shields.io/pypi/status/chatly.svg)](https://pypi.org/project/chatly/)
-[![Daily downloads](https://img.shields.io/pypi/dd/chatly.svg)](https://pypi.org/project/chatly/)
-[![Weekly downloads](https://img.shields.io/pypi/dw/chatly.svg)](https://pypi.org/project/chatly/)
 [![Monthly downloads](https://img.shields.io/pypi/dm/chatly.svg)](https://pypi.org/project/chatly/)
 [![Distribution format](https://img.shields.io/pypi/format/chatly.svg)](https://pypi.org/project/chatly/)
 [![Wheel availability](https://img.shields.io/pypi/wheel/chatly.svg)](https://pypi.org/project/chatly/)
@@ -21,12 +19,8 @@
 [![Github last commit](https://img.shields.io/github/last-commit/phil65/chatly)](https://github.com/phil65/chatly/commits)
 [![Github release date](https://img.shields.io/github/release-date/phil65/chatly)](https://github.com/phil65/chatly/releases)
 [![Github language count](https://img.shields.io/github/languages/count/phil65/chatly)](https://github.com/phil65/chatly)
-[![Github commits this week](https://img.shields.io/github/commit-activity/w/phil65/chatly)](https://github.com/phil65/chatly)
 [![Github commits this month](https://img.shields.io/github/commit-activity/m/phil65/chatly)](https://github.com/phil65/chatly)
-[![Github commits this year](https://img.shields.io/github/commit-activity/y/phil65/chatly)](https://github.com/phil65/chatly)
 [![Package status](https://codecov.io/gh/phil65/chatly/branch/main/graph/badge.svg)](https://codecov.io/gh/phil65/chatly/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyUp](https://pyup.io/repos/github/phil65/chatly/shield.svg)](https://pyup.io/repos/github/phil65/chatly/)
 
 [Read the documentation!](https://phil65.github.io/chatly/)
-
