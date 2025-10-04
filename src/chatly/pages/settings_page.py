@@ -77,7 +77,7 @@ class GeneralSettings(widgets.Widget):
         config.log_format = self.lineedit_log_format.text()
         config.log_level = self.combo_log_level.get_value()
         config.show_context_shortcuts = self.chk_context_shortcuts.get_value()
-        widgets.app().settings_updated.emit()
+        self.settings_updated.emit()
 
 
 class SettingsPage(custom_widgets.SidebarWidget):

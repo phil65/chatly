@@ -125,7 +125,7 @@ class ThreadPool(core.ThreadPool):
             runnable.signals.error.connect(self._decrease_num_jobs_blocking)
         else:
             if message:
-                core.app().popup_info.emit(message)
+                core.app().popup_info.emit(message)  # type: ignore
             self.num_jobs += 1
             if self.num_jobs == 1:
                 self.busy_on.emit()

@@ -21,7 +21,7 @@ class MainWindow(custom_widgets.SidebarWidget):
 
         self.set_title(chatly.__title__)
         self.set_object_name("MainWindow")
-
+        self.settings_view = pages.SettingsPage()
         self.start_view = pages.StartPage()
         self.ocr_view = pages.OcrPage()
         self.chat_page = pages.ChatPage()
@@ -68,7 +68,7 @@ class MainWindow(custom_widgets.SidebarWidget):
             shortcut="F11",
             area="bottom",
         )
-        widgets.app().settings_updated.emit()
+        self.settings_view.general_settings.settings_updated.emit()
 
     def show(self, *args, **kwargs):
         self.load_window_state(recursive=True)
@@ -92,8 +92,7 @@ class MainWindow(custom_widgets.SidebarWidget):
         return super().keyPressEvent(event)
 
     def show_settings(self):
-        settings_view = pages.SettingsPage()
-        settings_view.show_blocking()
+        self.settings_view.show_blocking()
 
     def update_statusbar(self, num_jobs: int):
         if num_jobs > 0:

@@ -176,7 +176,7 @@ class PreviewWidget(widgets.Widget):
     def load_markdown(self, content: str):
         """Load markdown content for preview."""
         logger.info("Loading markdown content")
-        from mkdown import ComrakParser
+        from mkconvert import ComrakParser
 
         parser = ComrakParser()
         html_content = parser.convert(content)
