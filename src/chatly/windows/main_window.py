@@ -27,7 +27,6 @@ class MainWindow(custom_widgets.SidebarWidget):
         self.chat_page = pages.ChatPage()
         self.help_page = pages.HelpPage()
         self.documents_page = pages.DocumentsPage()
-        # self.explorer_page = pages.FileExplorerPage()
         self.log_page = pages.LogPage()
 
         self.add_tab(self.start_view, _("Start"), icon="mdi.google-nearby", shortcut="F1")
@@ -95,10 +94,7 @@ class MainWindow(custom_widgets.SidebarWidget):
         self.settings_view.show_blocking()
 
     def update_statusbar(self, num_jobs: int):
-        if num_jobs > 0:
-            text = f"{_('Running jobs')}: {num_jobs}"
-        else:
-            text = _("No running jobs")
+        text = f"{_('Running jobs')}: {num_jobs}" if num_jobs > 0 else _("No running jobs")
         self.status_label.set_text(text)
 
 

@@ -119,9 +119,7 @@ class PreviewWidget(widgets.Widget):
         self.toolbar.add_action(
             _("Zoom Out"), icon="mdi.magnify-minus-outline", callback=self.zoom_out
         )
-        self.toolbar.add_action(
-            _("Reset Zoom"), icon="mdi.magnify", callback=self.reset_zoom
-        )
+        self.toolbar.add_action(_("Reset Zoom"), icon="mdi.magnify", callback=self.reset_zoom)
         self.web_view = webenginewidgets.WebEngineView()
         self.web_view.get_settings()["plugins_enabled"] = True
         self.zoom_factor = 1.0

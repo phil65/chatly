@@ -102,8 +102,7 @@ class DocumentsPage(widgets.MainWindow):
             self,
             _("Clear Documents"),
             _("Are you sure you want to remove all documents?"),
-            buttons=widgets.MessageBox.StandardButton.Yes
-            | widgets.MessageBox.StandardButton.No,
+            buttons=widgets.MessageBox.StandardButton.Yes | widgets.MessageBox.StandardButton.No,
         )
 
         if result == widgets.MessageBox.StandardButton.Yes:

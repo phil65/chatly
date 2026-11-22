@@ -11,9 +11,7 @@ class LangProvider:
 
     @classmethod
     def set_language(cls, language):
-        lang = gettext.translation(
-            MODULE_NAME, localedir=str(LANG_DIR), languages=[language]
-        )
+        lang = gettext.translation(MODULE_NAME, localedir=str(LANG_DIR), languages=[language])
         lang.install(None)
         cls.lang = lang.gettext
 

@@ -14,9 +14,7 @@ logger = logging.getLogger(__name__)
 
 MODULE_NAME = chatly.__name__
 
-dirs = platformdirs.AppDirs(
-    chatly.__title__, appauthor=False, roaming=True, ensure_exists=True
-)
+dirs = platformdirs.AppDirs(chatly.__title__, appauthor=False, roaming=True, ensure_exists=True)
 
 if getattr(sys, "frozen", False):
     # pylint: disable=no-member,protected-access

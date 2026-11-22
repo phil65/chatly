@@ -7,13 +7,11 @@ from chatly.pages.chat_page import ChatPage
 from chatly.pages.browser_page import HelpPage
 from chatly.pages.documents_page import DocumentsPage
 
-# from chatly.pages.explorer_page import FileExplorerPage
 from chatly.pages.log_page import LogPage
 
 __all__ = [
     "ChatPage",
     "DocumentsPage",
-    # "FileExplorerPage",
     "HelpPage",
     "LogPage",
     "OcrPage",
