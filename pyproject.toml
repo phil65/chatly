@@ -27,11 +27,12 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "comrak>=0.0.6",
   # Only add below (Copier)
-  "docler[all]>=0.2.0",
+  "anyenv>=2.0.0",
+  "comrak>=0.0.6",
+  "docler[all]>=2.3.0",
   "mkconvert[comrak]>=0.11.5",
-  "mkdown>=0.1.1",
+  "platformdirs>=4.0.0",
   "prettyqt[pyside6]",
   "pydantic",
 ]
@@ -83,6 +84,10 @@ exclude_lines = [
   "except ImportError",
   'if __name__ == "__main__":',
 ]
+
+[tool.deptry.per_rule_ignores]
+# comrak is the backend of mkconvert's ComrakParser (used in widgets/preview_widget.py).
+DEP002 = ["comrak"]
 
 [tool.mknodes]
 allowed-commit-types = [
