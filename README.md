@@ -9,7 +9,6 @@
 [![Implementation](https://img.shields.io/pypi/implementation/chatly.svg)](https://pypi.org/project/chatly/)
 [![Releases](https://img.shields.io/github/downloads/phil65/chatly/total.svg)](https://github.com/phil65/chatly/releases)
 [![Github Contributors](https://img.shields.io/github/contributors/phil65/chatly)](https://github.com/phil65/chatly/graphs/contributors)
-[![Github Discussions](https://img.shields.io/github/discussions/phil65/chatly)](https://github.com/phil65/chatly/discussions)
 [![Github Forks](https://img.shields.io/github/forks/phil65/chatly)](https://github.com/phil65/chatly/forks)
 [![Github Issues](https://img.shields.io/github/issues/phil65/chatly)](https://github.com/phil65/chatly/issues)
 [![Github Issues](https://img.shields.io/github/issues-pr/phil65/chatly)](https://github.com/phil65/chatly/pulls)
