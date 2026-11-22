@@ -21,6 +21,66 @@
 [![Github language count](https://img.shields.io/github/languages/count/phil65/chatly)](https://github.com/phil65/chatly)
 [![Github commits this month](https://img.shields.io/github/commit-activity/m/phil65/chatly)](https://github.com/phil65/chatly)
 [![Package status](https://codecov.io/gh/phil65/chatly/branch/main/graph/badge.svg)](https://codecov.io/gh/phil65/chatly/)
-[![PyUp](https://pyup.io/repos/github/phil65/chatly/shield.svg)](https://pyup.io/repos/github/phil65/chatly/)
 
 [Read the documentation!](https://phil65.github.io/chatly/)
+
+Chatly is a Qt desktop app for turning documents into Markdown. You browse your files, preview
+PDFs and images, and convert them with one click using any of the document converters from
+[docler](https://github.com/phil65/docler). The converted documents stay available for review in
+the app.
+
+> **Status:** early development. Document conversion and preview work. The Chat and
+> Datasets pages are placeholders for now.
+
+## Installation
+
+```bash
+pip install chatly
+# or
+uv tool install chatly
+```
+
+Requires Python 3.13+. The GUI is built on [prettyqt](https://github.com/phil65/prettyqt) /
+PySide6 (with Qt WebEngine for previews).
+
+## Quickstart
+
+```bash
+chatly          # start the app
+chatly -v       # start with debug logging
+```
+
+1. On the **Start** page, select a PDF or image in the file tree on the left. A preview opens
+   in the middle.
+2. Click a converter on the right (`datalab`, `docling`, `marker`, `mistral`, `llamaparse`,
+   `azure` or `upstage`). The conversion runs in the background.
+3. Open the **Documents** page to see the converted documents, a rendered Markdown preview and
+   the raw Markdown.
+
+Most converters are cloud services and read their API keys from the environment
+(for example `MISTRAL_API_KEY`, `LLAMAPARSE_API_KEY`, `DATALAB_API_KEY`, `UPSTAGE_API_KEY`, and
+`AZURE_DOC_INTELLIGENCE_ENDPOINT` / `AZURE_DOC_INTELLIGENCE_KEY`). `docling` and `marker` run locally but download models on first use. See the
+[docler documentation](https://phil65.github.io/docler/) for the details of each provider.
+
+## Features
+
+- File browser for PDF and image files, with an embedded preview (Qt WebEngine)
+- Seven document-to-Markdown backends through docler, run on a background thread pool
+- Document list with a rendered preview (comrak) and the raw Markdown side by side
+- Settings dialog for theme, style, toolbar style and logging (work in progress: values are
+  not applied or saved yet)
+- Window and dock layout is saved between sessions
+
+## Development
+
+```bash
+git clone https://github.com/phil65/chatly
+cd chatly
+uv sync --all-extras
+uv run chatly
+uv run pytest
+```
+
+## License
+
+MIT
