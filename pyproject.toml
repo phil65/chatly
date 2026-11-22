@@ -3,7 +3,7 @@
 [project]
 name = "chatly"
 version = "1.0.0"
-description = "Agent desktop app"
+description = "Qt desktop app for converting PDFs and images to Markdown with docler"
 readme = "README.md"
 requires-python = ">=3.13"
 license = "MIT"
@@ -11,18 +11,31 @@ license-files = ["LICENSE"]
 authors = [
   { name = "Philipp Temminghoff", email = "philipptemminghoff@googlemail.com" },
 ]
-keywords = []
+keywords = [
+  "desktop",
+  "docler",
+  "document-conversion",
+  "gui",
+  "markdown",
+  "ocr",
+  "pdf",
+  "prettyqt",
+  "pyside6",
+  "qt",
+]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Alpha",
+  "Environment :: X11 Applications :: Qt",
   "Framework :: Pydantic",
   "Framework :: Pydantic :: 2",
-  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-  "Topic :: Software Development",
+  "Topic :: Office/Business",
+  "Topic :: Text Processing :: Markup :: Markdown",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
@@ -41,6 +54,7 @@ dependencies = [
 "Code coverage" = "https://app.codecov.io/gh/phil65/chatly"
 Discussions = "https://github.com/phil65/chatly/discussions"
 Documentation = "https://phil65.github.io/chatly/"
+Homepage = "https://github.com/phil65/chatly"
 Issues = "https://github.com/phil65/chatly/issues"
 Source = "https://github.com/phil65/chatly"
 
