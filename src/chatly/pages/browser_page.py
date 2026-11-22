@@ -1,4 +1,4 @@
-"""Top-level package for DataCook QtCharts Plugin."""
+"""Help page with an embedded web view."""
 
 from prettyqt import webenginewidgets, widgets
 

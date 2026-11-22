@@ -1,4 +1,4 @@
-"""Converters configuration for the Streamlit app."""
+"""Registry of the docler document converters offered in the UI."""
 
 from __future__ import annotations
 
